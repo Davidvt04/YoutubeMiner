@@ -105,7 +105,8 @@ public class ChannelController {
         Integer maxVideo = sizeVideo==null? 10 : sizeVideo;
         Integer maxComment = sizeComment==null? 10: sizeComment;
         Channel channel=findChannel(id, maxVideo, maxComment);
-        String uri = "http://localhost:8080/videominer/channels";
+        //String uri = "http://localhost:8080/videominer/channels";
+        String uri = "https://vimeominer.azurewebsites.net/videominer/channels";
 
         System.out.println(channel);
 
