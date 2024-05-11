@@ -1,6 +1,5 @@
 package AISS.YouTubeMiner.service;
 
-import AISS.YouTubeMiner.exception.DisableCommentException;
 import AISS.YouTubeMiner.exception.MaxValueException;
 import AISS.YouTubeMiner.model.youtube.comment.CommentYouTube;
 import org.junit.jupiter.api.DisplayName;
