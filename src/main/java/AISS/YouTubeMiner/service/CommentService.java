@@ -1,6 +1,5 @@
 package AISS.YouTubeMiner.service;
 
-import AISS.YouTubeMiner.exception.DisableCommentException;
 import AISS.YouTubeMiner.model.youtube.comment.CommentYouTube;
 import AISS.YouTubeMiner.model.youtube.comment.CommentSearch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class CommentService {
 
     private final static String token = "AIzaSyBuOr1tTp7kcvBLNjQ3M4aBJ0R9b3I736Y";
 
-    public List<CommentYouTube> findCommentsFromVideoId(String videoId, Integer maxComments) throws DisableCommentException {
+    public List<CommentYouTube> findCommentsFromVideoId(String videoId, Integer maxComments) {
         try{
             String uri = "https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=" + videoId+"&maxResults="+maxComments+"&key=" + token;
             HttpHeaders headers= new HttpHeaders();
@@ -36,7 +35,12 @@ public class CommentService {
                 return new LinkedList<>();
             }
         }catch (Exception e){
-            throw new DisableCommentException();
+            if(e.getMessage().contains("403")){
+                return new LinkedList<>();
+            }else{
+                throw e;
+            }
+
         }
 
     }

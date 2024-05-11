@@ -4,7 +4,6 @@ import AISS.YouTubeMiner.etl.TransformCaption;
 import AISS.YouTubeMiner.etl.TransformChannel;
 import AISS.YouTubeMiner.etl.TransformComment;
 import AISS.YouTubeMiner.etl.TransformVideo;
-import AISS.YouTubeMiner.exception.DisableCommentException;
 import AISS.YouTubeMiner.exception.MaxValueException;
 import AISS.YouTubeMiner.model.videominer.Caption;
 import AISS.YouTubeMiner.model.videominer.Channel;
@@ -27,7 +26,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.RequestPath;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -55,14 +53,14 @@ public class ChannelController {
             tags = {"channel", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Youtube channel", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "403", content = {@Content(schema = @Schema)})})
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+            })
 
     @GetMapping("/{id}")
     public Channel findChannel(@Parameter(description = "User's id of the channel ") @PathVariable String id,
                                @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,
                                @Parameter(description = "Optional parameter to limit the number of comments")@RequestParam(required = false, defaultValue = "10") Integer sizeComment
-                            ) throws DisableCommentException, MaxValueException {
+                            ) throws MaxValueException {
         if(sizeComment < 0 || sizeVideo <0){
             throw new MaxValueException();
         }
@@ -92,14 +90,14 @@ public class ChannelController {
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Youtube channel", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "403", content = {@Content(schema = @Schema)})})
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+            })
     @PostMapping("/{id}")
     public Channel postChannel(@Parameter(description = "User's id of the channel")@PathVariable String id,
                                 @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,
                                @Parameter(description = "Optional parameter to limit the number of comments")@RequestParam(required = false, defaultValue = "10") Integer sizeComment
-    ) throws DisableCommentException, MaxValueException {
-        if(sizeComment!=null && sizeVideo != null && (sizeComment < 0 || sizeVideo <0)){
+    ) throws MaxValueException {
+        if(sizeComment < 0 || sizeVideo <0){
             throw new MaxValueException();
         }
         Integer maxVideo = sizeVideo==null? 10 : sizeVideo;
