@@ -63,7 +63,7 @@ public class ChannelController {
                                @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,
                                @Parameter(description = "Optional parameter to limit the number of comments")@RequestParam(required = false, defaultValue = "10") Integer sizeComment
                             ) throws DisableCommentException, MaxValueException {
-        if(sizeComment!=null && sizeVideo != null && (sizeComment < 0 || sizeVideo <0)){
+        if(sizeComment < 0 || sizeVideo <0){
             throw new MaxValueException();
         }
         ChannelYouTube channelYoutube = channelService.findChannel(id);
