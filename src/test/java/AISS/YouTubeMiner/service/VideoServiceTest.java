@@ -18,7 +18,7 @@ class VideoServiceTest {
     @Test
     @DisplayName("Get a video")
     void findvideo(){
-        VideoSnippet res= service.findVideo("VVVfeDVYRzFPVjJQNnVaWjVGU005VHR3LnNxdE9sLXlJSFNB");
+        VideoSnippet res= service.findVideo("SIm2W9TtzR0");
     }
 
    @Test
@@ -32,7 +32,7 @@ class VideoServiceTest {
     @Test
     @DisplayName("Get ID of a playlist")
     void findId(){
-        String res= service.getPlaylistId("GoogleDevelopers");
+        String res= service.getPlaylistId("UC_x5XG1OV2P6uZZ5FSM9Ttw");
         System.out.println(res);
     }
 
